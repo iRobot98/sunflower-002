@@ -6,6 +6,8 @@ const port = process.env.PORT || 3000
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
+
+app.use("/",require("./src"))
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'views', 'index.html'))
 });
