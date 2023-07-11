@@ -1,3 +1,4 @@
+require("dotenv/config")
 const express = require('express')
 const app = express()
 const favicon = require('serve-favicon')
@@ -5,7 +6,7 @@ const path = require('path')
 const port = process.env.PORT || 3000
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-
+app.use("/assets",express.static("./views/assets"));
 
 app.use("/",require("./src"))
 app.get('/', function(req, res) {
