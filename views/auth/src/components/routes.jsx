@@ -9,7 +9,7 @@ export default function RouteHandler({ valid_routes }) {
                     // valid_routes &&
                     valid_routes.map((route_, i) => (
                         <Route
-                            path={route_.path}
+                            path={`/authenticate${route_.path}`}
                             key={`route_${i}`}
                             element={route_.page}
                         />
