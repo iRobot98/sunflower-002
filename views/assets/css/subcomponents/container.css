@@ -1,0 +1,12 @@
+
+.flex-center{
+    @apply flex justify-center items-center
+}
+
+body {
+    @apply flex-center bg-[rgba(156,245,148,0.49)]
+}
+
+#root{
+  @apply m-auto min-w-[400px] bg-white min-h-screen
+}

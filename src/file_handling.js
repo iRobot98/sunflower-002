@@ -4,15 +4,6 @@ const { splitUrl } = require("./utils/001");
 const fs = require("fs");
 const router = express.Router();
 
-// router.use("*", (req, res, callNext) => {
-//   const { method, ip, originalUrl } = req;
-
-//   res.on("finish", () => {
-//     const { statusCode } = res;
-//     console.log(`${statusCode} ${method} ${originalUrl} ${ip}`);
-//   });
-//   callNext();
-// });
 
 let files_dictionary = {};
 router.get("*", (req, res, callNext) => {

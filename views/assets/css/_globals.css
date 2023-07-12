@@ -1,1 +1,8 @@
 @import "./_tailwind.css";
+
+
+@import "./../fontawesome6/css/regular.min.css";
+@import "./../fontawesome6/css/brands.min.css";
+@import "./../fontawesome6/css/all.min.css";
+
+@import "./subcomponents/index.css"
