@@ -1,8 +1,11 @@
 import React from 'react'
+import Layout from '../components/layout'
 
-function LogIn() {
+function LogIn(props) {
   return (
-    <div>LogIn</div>
+    <Layout>
+      Log In
+    </Layout>
   )
 }
 

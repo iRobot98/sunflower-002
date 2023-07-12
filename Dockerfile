@@ -9,5 +9,4 @@ RUN cd views/auth && npm run build && cd ../..
 COPY . .
 
 EXPOSE 3000
-# EXPOSE 5050
 CMD npm run start

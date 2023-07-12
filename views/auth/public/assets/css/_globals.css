@@ -1,1 +1,9 @@
 @import "./_tailwindcss.css";
+
+#container {
+    @apply bg-[#45f345a9] h-screen w-screen flex items-center justify-center;
+}
+
+#page {
+    @apply bg-[#eceaeac9] h-screen w-[400px] max-w-[450px] flex flex-col items-center justify-center relative;
+}
