@@ -4,7 +4,9 @@ import Layout from '../components/layout'
 function SignUp(props) {
   return (
     <Layout>
-      Sign Up
+      <div className="form_">
+        <img src="/assets/images/logo.png" className="h-[50px] w-[50px]" alt="" srcset="" />
+      </div>
     </Layout>
   )
 }
