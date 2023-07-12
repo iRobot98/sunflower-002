@@ -15,8 +15,8 @@ export default function RouteHandler({ valid_routes }) {
                         />
                     ))
                 }
-                <Route path="/404" element={<PageNotFound />} />
-                <Route path="*" element={<Navigate to="/404" />} />
+                <Route path="/authenticate/404" element={<PageNotFound />} />
+                <Route path="*" element={<Navigate to="/authenticate/404" />} />
             </Routes>
         </BrowserRouter>
     );

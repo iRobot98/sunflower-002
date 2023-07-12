@@ -5,23 +5,33 @@ const { logger } = require("./utils/logger");
 const router = express.Router();
 
 {
-    const app_index = "views/app/build/index.html";
-    logger.print(`${app_index} exists:`, fs.existsSync(app_index));
-
-    router.get("/app", express.static("views/app/build"));
-    router.get("/app", (req, res) =>
-        res.contentType("html").send(fs.readFileSync(app_index))
-    );
-}
-{
     const auth_index = "views/auth/build/index.html";
     logger.print(`${auth_index} exists:`, fs.existsSync(auth_index));
 
-    router.get("/auth", express.static("views/auth/build"));
+    router.get("/static", express.static("views/auth/build"));
 
-    router.get("/auth", (req, res) =>
-        res.contentType("html").send(fs.readFileSync(auth_index))
-    );
+    router.get("/authenticate", (req, res, callNext) => {
+        const { originalUrl } = req;
+        const login = () => res.redirect("/authenticate/log_in");
+        const send_auth_page = () =>
+            res.contentType("html").send(fs.readFileSync(auth_index));
+        return send_auth_page();
+        console.log("hitting foo");
+        switch (originalUrl) {
+            case "/authenticate":
+                return login();
+            case "/authenticate/log_in":
+                return send_auth_page();
+            case "/authenticate/sign_up":
+                return send_auth_page();
+            case "/authenticate/404":
+                return send_auth_page();
+            default:
+                if (originalUrl.startsWith("/auth")) return login();
+        }
+
+        callNext();
+    });
 }
 
 {
@@ -32,6 +42,16 @@ const router = express.Router();
 
     router.get("/global_assets/index.css", (req, res) =>
         res.contentType("css").send(fs.readFileSync(global_css))
+    );
+}
+
+{
+    const app_index = "views/app/build/index.html";
+    logger.print(`${app_index} exists:`, fs.existsSync(app_index));
+
+    router.get("/static", express.static("views/app/build"));
+    router.get("/app", (req, res) =>
+        res.contentType("html").send(fs.readFileSync(app_index))
     );
 }
 module.exports = router;

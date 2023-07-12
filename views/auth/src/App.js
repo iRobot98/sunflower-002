@@ -6,8 +6,8 @@ function App() {
     return (
         <RouteHandler
             valid_routes={[
-                { path: "/signup", page: <SignUp /> },
-                { path: "/login", page: <LogIn /> },
+                { path: "/sign_up", page: <SignUp /> },
+                { path: "/log_in", page: <LogIn /> },
             ]}
         />
     );

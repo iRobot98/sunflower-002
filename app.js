@@ -5,7 +5,7 @@ const app = express();
 const favicon = require("serve-favicon");
 const path = require("path");
 const { logger } = require("./src/utils/logger");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5050;
 
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
