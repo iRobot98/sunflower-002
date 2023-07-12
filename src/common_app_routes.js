@@ -4,11 +4,14 @@ const path = require("path");
 const { logger } = require("./utils/logger");
 const router = express.Router();
 
+logger.on();
 {
     const auth_index = "views/auth/build/index.html";
-    logger.print(`${auth_index} exists:`, fs.existsSync(auth_index));
+    const auth_assets = "views/auth/build/static";
+    logger.print(`${auth_index} exists: ${fs.existsSync(auth_index)}`);
+    logger.print(`${auth_assets} exists: ${fs.existsSync(auth_assets)}`);
 
-    router.get("/static", express.static("views/auth/build"));
+    router.get("/static", express.static("views/auth/build/static"));
 
     router.get("/authenticate", (req, res, callNext) => {
         const { originalUrl } = req;
@@ -36,7 +39,7 @@ const router = express.Router();
 
 {
     const global_css = "views/assets/css/globals.css";
-    logger.print(`${global_css} exists:`, fs.existsSync(global_css));
+    logger.print(`${global_css} exists: ` + fs.existsSync(global_css));
 
     router.get("/global_assets", express.static("views/assets/"));
 
@@ -47,11 +50,13 @@ const router = express.Router();
 
 {
     const app_index = "views/app/build/index.html";
-    logger.print(`${app_index} exists:`, fs.existsSync(app_index));
+    logger.print(`${app_index} exists: ` + fs.existsSync(app_index));
 
     router.get("/static", express.static("views/app/build"));
     router.get("/app", (req, res) =>
         res.contentType("html").send(fs.readFileSync(app_index))
     );
 }
+
+logger.off();
 module.exports = router;
