@@ -5,3 +5,14 @@ export default function Layout({ children }) {
         </div>
     );
 }
+
+
+export  function FormLayout({ children }) {
+    return (
+        <div className="form_">
+            <div id="page">{children}</div>
+        </div>
+    );
+}
+
+
