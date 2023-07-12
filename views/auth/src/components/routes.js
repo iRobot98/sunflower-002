@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import PageNotFound from "../404";
+import PageNotFound from "../pages/404";
 
 export default function RouteHandler({ valid_routes }) {
     return (
