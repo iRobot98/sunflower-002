@@ -1,11 +1,7 @@
+import RouteHandler from "./components/routes";
+
 function App() {
-    return (
-        <div className="">
-            <div className="">
-                <h3>Hello World</h3>
-            </div>
-        </div>
-    );
+    return <RouteHandler />;
 }
 
 export default App;
