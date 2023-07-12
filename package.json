@@ -20,8 +20,5 @@
     "nodemon": "^3.0.1",
     "serve-favicon": "^2.5.0",
     "zod": "^3.21.4"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.3.2"
   }
 }

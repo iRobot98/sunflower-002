@@ -1,11 +1,12 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const { logger } = require("./utils/logger");
 const router = express.Router();
 
 {
     const app_index = "views/app/build/index.html";
-    console.log(`${app_index} exists:`, fs.existsSync(app_index));
+    logger.print(`${app_index} exists:`, fs.existsSync(app_index));
 
     router.get("/app", express.static("views/app/build"));
     router.get("/app", (req, res) =>
@@ -14,7 +15,7 @@ const router = express.Router();
 }
 {
     const auth_index = "views/auth/build/index.html";
-    console.log(`${auth_index} exists:`, fs.existsSync(auth_index));
+    logger.print(`${auth_index} exists:`, fs.existsSync(auth_index));
 
     router.get("/auth", express.static("views/auth/build"));
 
@@ -25,7 +26,7 @@ const router = express.Router();
 
 {
     const global_css = "views/assets/css/globals.css";
-    console.log(`${global_css} exists:`, fs.existsSync(global_css));
+    logger.print(`${global_css} exists:`, fs.existsSync(global_css));
 
     router.get("/global_assets", express.static("views/assets/"));
 

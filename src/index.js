@@ -2,12 +2,13 @@ const router = require("./router.import");
 const cors = require("cors");
 const multer = require("multer");
 const express = require("express");
+const { logger } = require("./utils/logger");
 
 router.use("*", (req, res, callNext) => {
     const { method, originalUrl, ip } = req;
 
     res.on("finish", (e) => {
-        console.log(`${res.statusCode} ${method} ${originalUrl} ${ip}`);
+        logger.on().print(`${res.statusCode} ${method} ${originalUrl} ${ip}`);
     });
     callNext();
 });
