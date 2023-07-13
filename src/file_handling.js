@@ -4,7 +4,6 @@ const { splitUrl } = require("./utils/001");
 const fs = require("fs");
 const router = express.Router();
 
-
 let files_dictionary = {};
 router.get("*", (req, res, callNext) => {
     const { originalUrl } = req;
@@ -36,42 +35,5 @@ router.get("*", (req, res, callNext) => {
 
     callNext();
 });
-
-// router.get("/*", (req, res, callNext) => {
-//   const { originalUrl } = req;
-//   let a_001 = originalUrl
-//     .split("/")
-//     .filter((v) => v.length < 1)
-//     .map((v) => v.toLowerCase());
-//   let a_002 = 0;
-//   for (let url_ of a_001) {
-//     switch (url_) {
-//       case "home":
-//       case "api":
-//       case "blog":
-//       case "core-values":
-//       case "about-us":
-//       case "images":
-//       case "gallery":
-//         a_002++;
-//         break;
-//       default:
-//     }
-//   }
-//   if (a_002 > 2) {
-//     let a_003 = [];
-//     let i = 0;
-//     for (let k of a_001) {
-//       if (i < a_002 - 1) {
-//         a_003.push("..");
-//       } else {
-//         a_003.push(k);
-//       }
-//     }
-//     res.redirect(a_003.join("/"));
-//   } else {
-//     callNext();
-//   }
-// });
 
 module.exports = router;

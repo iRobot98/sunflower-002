@@ -9,14 +9,14 @@ export default function RouteHandler({ valid_routes }) {
                     // valid_routes &&
                     valid_routes.map((route_, i) => (
                         <Route
-                            path={`/authenticate${route_.path}`}
+                            path={`${route_.path}`}
                             key={`route_${i}`}
                             element={route_.page}
                         />
                     ))
                 }
-                <Route path="/authenticate/404" element={<PageNotFound />} />
-                <Route path="*" element={<Navigate to="/authenticate/404" />} />
+                <Route path="/404" element={<PageNotFound />} />
+                <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
         </BrowserRouter>
     );
