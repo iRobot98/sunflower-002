@@ -17,10 +17,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    
     "set_up": "npm i --legacy-peer-deps && npm run build"
   },
-  "homepage":"/authenticate",
+  "homepage": "/authenticate",
   "proxy": "http://localhost:5050",
   "eslintConfig": {
     "extends": [
@@ -41,6 +40,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.25",
     "tailwindcss": "^3.3.2"
   }
 }

@@ -1,1 +1,1 @@
-npx tailwindcss -i ./public/assets/css/_globals.css -o ./public/assets/css/globals.css  --watch --minify
+npx tailwindcss -i ./src/assets/css/_globals.css -o ./src/assets/css/globals.css  --watch --minify

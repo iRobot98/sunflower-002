@@ -11,7 +11,7 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.use("/authenticate", express.static("./views/auth/build"), (req,res)=>res.send(fs.readFileSync("./views/auth/build/index.html")))
 
-app.use("/", require("./src"));
+app.use("*", require("./src"));
 
 
 app.get("/", function (req, res) {

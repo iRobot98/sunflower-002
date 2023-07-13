@@ -1,7 +1,8 @@
 const express = require("express");
-const filesList = require("./utils/fetch_files");
+const filesList = require("./utils/fetch_files_engine");
 const { splitUrl } = require("./utils/001");
 const fs = require("fs");
+const { logger } = require("./utils/logger");
 const router = express.Router();
 
 let files_dictionary = {};
@@ -18,13 +19,13 @@ router.get("*", (req, res, callNext) => {
         res.send(fs.readFileSync(k));
         return;
     }
-
+    logger.on().print(split.last);
     if (!originalUrl.includes("index")) {
         let valid_files = filesList.valid_asset_Files[split.ext];
         if (valid_files) {
+            res.type(split.ext);
             for (let k of valid_files) {
-                if (k.endsWith(split.last)) {
-                    res.type(split.ext);
+                if (k.endsWith(originalUrl)) {
                     res.send(fs.readFileSync(k));
                     files_dictionary[originalUrl];
                     return;
