@@ -5,6 +5,7 @@ export default function RouteHandler({ valid_routes }) {
     return (
         <BrowserRouter>
             <Routes>
+                <Route index element={valid_routes[1].page} />
                 {
                     // valid_routes &&
                     valid_routes.map((route_, i) => (
