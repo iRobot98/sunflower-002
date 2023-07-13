@@ -16,7 +16,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    
+    "set_up": "npm i --legacy-peer-deps && npm run build"
   },
   "homepage":"/authenticate",
   "proxy": "http://localhost:5050",
