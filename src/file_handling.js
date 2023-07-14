@@ -3,6 +3,7 @@ const filesList = require("./utils/fetch_files_engine");
 const { splitUrl } = require("./utils/001");
 const fs = require("fs");
 const { logger } = require("./utils/logger");
+const { sendFile } = require("./utils");
 const router = express.Router();
 
 let files_dictionary = {};
@@ -26,7 +27,7 @@ router.get("*", (req, res, callNext) => {
             res.type(split.ext);
             for (let k of valid_files) {
                 if (k.endsWith(originalUrl)) {
-                    res.send(fs.readFileSync(k));
+                    res.send(sendFile(k));
                     files_dictionary[originalUrl];
                     return;
                 }

@@ -29,5 +29,5 @@
 }
 
 .form_ form {
-    @apply border-[#8080807a] bg-white border-[1px]  rounded-md p-2 flex justify-between flex-col;
+    @apply border-[#8080807a] bg-white border-[1px]  rounded-md p-2 py-4 flex justify-between flex-col;
 }
