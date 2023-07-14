@@ -4,9 +4,9 @@ export default function Layout({ children }) {
     return (
         <div
             id="container"
-            className="w-screen h-screen bg-[#9df19de7] flex-center"
+            className="w-screen h-screen bg-[#9df19de7] flex-center "
         >
-            <div id="page" className="">
+            <div id="page" className="pt-[3rem]">
                 <div
                     id="header"
                     className=" w-full min-h-[1rem] top-0 bg-[green] p-2 flex"
