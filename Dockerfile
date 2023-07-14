@@ -9,5 +9,5 @@ COPY . .
 
 RUN npm run set_up
 
-EXPOSE 5050
+EXPOSE 3000
 CMD npm run start
