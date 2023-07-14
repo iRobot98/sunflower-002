@@ -1,13 +1,18 @@
 const { removeDuplicates, splitUrl, wait, wait_loop } = require("./001");
 const fs = require("fs");
-const sendFile = (file_path) => {
+const { logger } = require("./logger");
+
+const sendFile = (file_path, res) => {
     try {
         if (!fs.existsSync(file_path)) {
-            return "file: " + file_path + " doesn't exist";
+            logger.print("file: " + file_path + " doesn't exist");
+            res.redirect("/404");
+        } else {
+            res.send(fs.readFileSync(file_path));
         }
-        return fs.readFileSync(file_path);
     } catch (err) {
-        return err.message;
+        logger.print(err.message);
+        res.redirect("/404");
     }
 };
 module.exports = {

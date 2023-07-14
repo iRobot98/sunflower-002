@@ -17,7 +17,8 @@ router.get("*", (req, res, callNext) => {
     if (files_dictionary[originalUrl]) {
         let k = files_dictionary[originalUrl];
         res.type(split.ext);
-        res.send(fs.readFileSync(k));
+
+        sendFile(k, res);
         return;
     }
     logger.on().print(split.last);
@@ -27,8 +28,8 @@ router.get("*", (req, res, callNext) => {
             res.type(split.ext);
             for (let k of valid_files) {
                 if (k.endsWith(originalUrl)) {
-                    res.send(sendFile(k));
-                    files_dictionary[originalUrl];
+                    sendFile(k, res);
+                    files_dictionary[originalUrl] = k;
                     return;
                 }
             }
