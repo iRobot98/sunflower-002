@@ -1,16 +1,15 @@
 @import "./_tailwindcss.css";
 
-.flex-center{
-    @apply flex items-center justify-center
+.flex-center {
+    @apply flex items-center justify-center;
 }
 
-#page{
-    @apply h-screen max-w-[500px] w-[400px] flex-center flex-col bg-white ;
+#page {
+    @apply h-screen max-w-[500px] w-[400px] flex-center flex-col bg-white;
     position: relative;
-    
 }
 
-#header{
+#header {
     position: absolute;
-    top:0;
+    top: 0;
 }

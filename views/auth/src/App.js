@@ -1,5 +1,5 @@
 import RouteHandler from "./components/routes";
-import LogIn from "./pages/login";
+import SignIn from "./pages/signin";
 import SignUp from "./pages/signup";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
         <RouteHandler
             valid_routes={[
                 { path: "/sign_up", page: <SignUp /> },
-                { path: "/log_in", page: <LogIn /> },
+                { path: "/sign_in", page: <SignIn /> },
             ]}
         />
     );
