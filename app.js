@@ -6,7 +6,7 @@ const favicon = require("serve-favicon");
 const path = require("path");
 const { logger } = require("./src/utils/logger");
 const { connectToDatabase } = require("./src/DB/connectToDB");
-const { sendFile, splitUrl, searchFile } = require("./src/utils");
+
 const port = process.env.PORT || 5050;
 
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));

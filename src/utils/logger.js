@@ -33,6 +33,7 @@ function print(...text) {
             if (logger._debug) console.log(s);
         })(kv);
     }
+    logger.off();
 }
 
 module.exports = {

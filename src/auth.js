@@ -1,11 +1,12 @@
 const router = require("./router.import");
-const { splitUrl, sendFile } = require("./utils");
+const { splitUrl, sendFile, searchFile } = require("./utils");
+const { logger } = require("./utils/logger");
 
 router.get("*", (req, res, callNext) => {
-    console.log("new");
+    // console.log("new");
     const { originalUrl, method } = req;
 
-    console.log(originalUrl);
+    logger.print(originalUrl);
     switch (originalUrl.toLowerCase()) {
         case "/auth":
         case "/auth/":
