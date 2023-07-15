@@ -42,7 +42,7 @@ router.get("*", (req, res, callNext) => {
             return res.contentType(ext).send(j_);
         }
         res.redirect("../404");
-        console.log(j_);
+        // console.log(j_);
         return;
     }
     res.status(404);

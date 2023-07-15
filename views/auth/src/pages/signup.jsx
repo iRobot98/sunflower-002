@@ -16,10 +16,10 @@ function FormInput(props) {
     );
 }
 
-const Section = ({ children, next, prev, visibility }) => {
+const Section = ({ children, next, prev, visibility, hasErrors }) => {
     const Button = ({ onClick, children }) => (
         <div
-            className="p-2 rounded-md  border-2 flex-1 cursor-pointer flex-center m-auto"
+            className="p-2 rounded-md  border-2 w-full flex-initial cursor-pointer flex-center m-auto"
             onClick={onClick}
         >
             {children}
@@ -33,7 +33,15 @@ const Section = ({ children, next, prev, visibility }) => {
             <div className="p-2 flex">
                 {prev && <Button onClick={() => prev()}>Prev</Button>}
                 {prev && next && <div className="w-[2rem]" />}
-                {next && <Button onClick={() => next()}>Next</Button>}
+                {next && (
+                    <Button
+                        onClick={() => {
+                            if (!hasErrors) next();
+                        }}
+                    >
+                        Next
+                    </Button>
+                )}
             </div>
         </div>
     );
