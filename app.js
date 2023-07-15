@@ -13,8 +13,6 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.use("*", require("./src"));
 
-app.use(express.static("auth_client"));
-
 app.get("*", (req, res, callNext) => {
     const { originalUrl, method } = req;
 
