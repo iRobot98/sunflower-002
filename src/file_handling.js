@@ -16,9 +16,11 @@ router.get("*", (req, res, callNext) => {
     const split = splitUrl(originalUrl);
     if (files_dictionary[originalUrl]) {
         let k = files_dictionary[originalUrl];
-        res.type(split.ext);
+        // res.type(split.ext);
 
-        sendFile(k, res);
+        sendFile(k)
+            .then((f_) => res.contentType(split.ext).send(f_))
+            .catch((v) => res.send(400).redirect("/404"));
         return;
     }
     logger.on().print(split.last);
@@ -28,7 +30,9 @@ router.get("*", (req, res, callNext) => {
             res.type(split.ext);
             for (let k of valid_files) {
                 if (k.endsWith(originalUrl)) {
-                    sendFile(k, res);
+                    sendFile(k)
+                        .then((f_) => res.contentType(split.ext).send(f_))
+                        .catch((v) => res.send(400).redirect("/404"));
                     files_dictionary[originalUrl] = k;
                     return;
                 }

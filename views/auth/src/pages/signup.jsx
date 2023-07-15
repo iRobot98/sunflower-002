@@ -19,7 +19,7 @@ function FormInput(props) {
 const Section = ({ children, next, prev, visibility }) => {
     const Button = ({ onClick, children }) => (
         <div
-            className="p-2 rounded-md border-2 flex-1 cursor-pointer flex-center m-auto"
+            className="p-2 rounded-md  border-2 flex-1 cursor-pointer flex-center m-auto"
             onClick={onClick}
         >
             {children}

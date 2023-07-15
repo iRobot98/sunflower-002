@@ -20,7 +20,6 @@
         "eject": "react-scripts eject",
         "set_up": "npm i --legacy-peer-deps && npm run build"
     },
-    "homepage": "/auth",
     "proxy": "http://localhost:5050",
     "eslintConfig": {
         "extends": [
