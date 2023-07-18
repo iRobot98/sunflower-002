@@ -16,7 +16,15 @@ function FormInput(props) {
     );
 }
 
-const Section = ({ children, next, prev, visibility, hasErrors }) => {
+const Section = ({
+    children,
+    next,
+    prev,
+    page_no,
+    hasErrors,
+    maxPages,
+    currentPage,
+}) => {
     const Button = ({ onClick, children }) => (
         <div
             className="p-2 rounded-md  border-2 w-full flex-initial cursor-pointer flex-center m-auto"
@@ -25,15 +33,18 @@ const Section = ({ children, next, prev, visibility, hasErrors }) => {
             {children}
         </div>
     );
+    const prev_ = currentPage != 0;
+    const next_ = currentPage < maxPages - 1;
+    const visibility = currentPage == page_no;
     return (
         <div className={visibility ? "visible" : "hidden"}>
             {children}
 
             <div className="h-[1px] my-[1px] w-full bg-gray-400 rounded-sm" />
             <div className="p-2 flex">
-                {prev && <Button onClick={() => prev()}>Prev</Button>}
-                {prev && next && <div className="w-[2rem]" />}
-                {next && (
+                {prev_ && <Button onClick={() => prev()}>Prev</Button>}
+                {prev_ && next_ && <div className="w-[2rem]" />}
+                {next_ && (
                     <Button
                         onClick={() => {
                             if (!hasErrors) next();
@@ -45,6 +56,22 @@ const Section = ({ children, next, prev, visibility, hasErrors }) => {
             </div>
         </div>
     );
+};
+
+const generate_next_prev = (max_, page_, setPage) => {
+    const max = max_ - 1;
+    const next = () => {
+        setPage(page_ >= max ? max : page_ + 1);
+        // console.log(formPage);
+    };
+    const prev = () => {
+        setPage(page_ <= 0 ? 0 : page_ - 1);
+        // console.log(formPage);
+    };
+    return {
+        next,
+        prev,
+    };
 };
 
 export default function SignUp(props) {
@@ -74,14 +101,14 @@ export default function SignUp(props) {
         postData(values).then((res) => console.log(res));
     };
     const [formPage, setPage] = useState(0);
-    const max = 2;
-    const next = () => {
-        setPage(formPage >= 2 ? 2 : formPage + 1);
-        // console.log(formPage);
-    };
-    const prev = () => {
-        setPage(formPage <= 0 ? 0 : formPage - 1);
-        // console.log(formPage);
+    const maxPages = 3;
+
+    const { next, prev } = generate_next_prev(maxPages, formPage, setPage);
+    const countErrors = () => {
+        let k_s = Object.keys(errors);
+        let e_s = 0;
+        for (let k of k_s) e_s += errors[k_s]?.length;
+        return e_s;
     };
     return (
         <Layout>
@@ -89,7 +116,13 @@ export default function SignUp(props) {
                 <h3 className="text-[2rem] ">Sign Up</h3>
                 <form action="POST" ref={ref} onSubmit={handleSubmit}>
                     {/* firstname middlename lastname dob */}
-                    <Section next={next} visibility={formPage == "0"}>
+                    <Section
+                        next={next}
+                        prev={prev}
+                        currentPage={formPage}
+                        maxPages={maxPages}
+                        page_no={0}
+                    >
                         <FormInput
                             name="firstname"
                             type="text"
@@ -122,7 +155,9 @@ export default function SignUp(props) {
                     <Section
                         next={next}
                         prev={prev}
-                        visibility={formPage == "1"}
+                        currentPage={formPage}
+                        maxPages={maxPages}
+                        page_no={1}
                     >
                         <FormInput
                             name="username"
@@ -144,11 +179,20 @@ export default function SignUp(props) {
                         />
                     </Section>
 
-                    {/* username password resetpassword */}
-                    <Section prev={prev} visibility={formPage == "2"}>
+                    {/* confirmation code? */}
+                    <Section
+                        next={next}
+                        prev={prev}
+                        currentPage={formPage}
+                        maxPages={maxPages}
+                        page_no={2}
+                    >
                         <FormInput
                             name="username"
                             type="text"
+                            iprops={{
+                                initialValue: "hey",
+                            }}
                             errors={errors}
                             label="User Name"
                         />
@@ -166,15 +210,15 @@ export default function SignUp(props) {
                         />
                     </Section>
 
-                    <div className="flex">
+                    <div className="flex flex-row-reverse">
                         <div
                             onClick={handleSubmit}
-                            className="bg-[blue] text-white m-2 py-2 px-4 rounded-md"
+                            className={`${
+                                countErrors() ? "bg-[#4ab44a]" : "bg-[green]"
+                            } text-white m-2 py-2 px-4 rounded-md cursor-pointer`}
                         >
                             Submit
                         </div>
-
-                        <button>Submit_</button>
                     </div>
                 </form>
                 {/* 

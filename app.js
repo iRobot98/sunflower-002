@@ -19,6 +19,17 @@ app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
+app.use(express.static("views"));
+
+app.get(
+    "*",
+    (req, res, callNext) => {
+        const { originalUrl } = req;
+
+        callNext();
+    },
+    (req, res) => res.redirect("/404")
+);
 app.listen(
     port,
     connectToDatabase().then(() =>

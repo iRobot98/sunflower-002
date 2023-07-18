@@ -4,7 +4,7 @@ const multer = require("multer");
 const express = require("express");
 const { logger } = require("./utils/logger");
 
-router.use("*", (req, res, callNext) => {
+router.use("*", cors(), (req, res, callNext) => {
     const { method, originalUrl, ip } = req;
 
     res.on("finish", (e) => {
@@ -12,8 +12,6 @@ router.use("*", (req, res, callNext) => {
     });
     callNext();
 });
-
-router.get("/", cors(), require("./file_handling"));
 
 router.use(
     "/api",
