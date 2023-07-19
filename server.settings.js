@@ -14,6 +14,7 @@ module.exports = {
     valid_dirs: ["assets", "public", "static"],
     invalid_exts: [
         ".bat",
+        ".html",
         ".jsx",
         ".env",
         ".htaccess",

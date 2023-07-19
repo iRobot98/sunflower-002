@@ -96,8 +96,14 @@ const fill_valid_files = () => {
     for (let a of all_files) {
         let { ext } = splitUrl(a);
         if (valid_assets[ext]) valid_assets[ext].push(a);
-        console.log(a);
+        // console.log(a);
     }
 };
 fill_valid_files();
-console.log(valid_assets);
+// console.log(valid_assets);
+
+module.exports = {
+    all_files,
+    valid_assets,
+    valid_exts: Object.keys(valid_assets),
+};

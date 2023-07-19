@@ -29,11 +29,12 @@
     border-radius: 4px;
     padding: 2px 4px;
     box-shadow: 0px 1px rgba(137, 139, 141, 0.849);
+    margin-right: 2px;
     min-width: 300px;
 }
 
-.form_ form {
-    @apply border-[#8080807a] bg-white border-[1px]  rounded-md p-2 py-4 flex justify-between flex-col;
+form.form_ {
+    @apply border-[#8080807a] bg-white border-[1px]  rounded-md p-2 py-4 flex  flex-col;
 }
 
 body {

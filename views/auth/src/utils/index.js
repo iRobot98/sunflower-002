@@ -8,7 +8,10 @@ export const postData = async (data, url = "/api/auth") => {
         body: JSON.stringify(data),
     })
         .then((res) => res.json())
-        .catch((e) => console.log(e.message));
+        .catch((e) => {
+            console.log(e.message);
+            return { errors: e.message };
+        });
 };
 
 export const captureValuesUsingRef = (ref) => {
