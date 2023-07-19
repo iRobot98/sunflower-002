@@ -33,7 +33,7 @@ export const defaultDate = () => {
     const t = new Date();
     const mm = t.getMonth().toString();
     const dd = t.getDate().toString();
-    const getDouble = (dn) => (dn.length == 2 ? dn : "0" + dn);
+    const getDouble = (dn) => (dn.length === 2 ? dn : "0" + dn);
     return `${(t.getFullYear() - 18).toString()}-${getDouble(mm)}-${getDouble(
         dd
     )}`;
