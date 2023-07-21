@@ -8,6 +8,13 @@ import { captureValuesUsingRef, postData } from "../utils";
 
 const date_regex = /(\d{4})-(0[1-9]|1[12])-(0[1-9]|1[0-9]|2[0-9]|3[01])/;
 
+const date_regex_general = /(\d{4})-(\d{2})-(\d{2})/;
+const date_regex_year = /(19[456789][0-9]|20[01][0-9])-(\d{2})-(\d{2})/;
+const date_regex_month = /(\d{4})-(0[0-9]|1[012])-(\d{2})/;
+const date_regex_day = /(\d{4})-(\d{2})-(0[123456789]|[12][0-9]|3[01])/;
+const date_regex_february =
+    /(\d{4})-(0[0-9^2]|1[012])-(\d{2})|(\d{4})-(02)-(0[123456789]|[12][0-9])/;
+
 const FormSchema = z.object({
     firstName: z
         .string()
@@ -26,8 +33,15 @@ const FormSchema = z.object({
         .regex(/^[A-Za-z]+$/i, "Please use letters only"),
     DateOfBirth: z
         .string()
-        .regex(date_regex, "Date of Birth must be a valid date"),
-    email: z.string().email(),
+        .regex(date_regex_general, "Date of Birth must be a valid date")
+        .regex(date_regex_year, "Please enter a year between 1940 and 2019")
+        .regex(date_regex_month, "Please give a valid month")
+        .regex(date_regex_day, "Please give a valid day")
+        .regex(
+            date_regex_february,
+            "February only has a maximum of 29 days on leap years"
+        ),
+    // email: z.string().email(),
 });
 
 const FormInput = ({ label, iprops, errors }) => {
@@ -72,6 +86,10 @@ const PageOne = ({ register, errors }) => {
     );
 };
 
+const PageTwo = ({ register, errors }) => {
+    return <div></div>;
+};
+
 function SignUp() {
     const {
         register,
@@ -92,7 +110,10 @@ function SignUp() {
         console.log(req_data);
         postData(req_data).then((res) => console.log(res));
     };
-    console.log(captureValuesUsingRef(ref));
+    if (errors) {
+        console.log(errors);
+    }
+
     return (
         <Layout>
             <div className="mx-auto min-h-[6rem] font-bold flex-center">
