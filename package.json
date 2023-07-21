@@ -7,13 +7,13 @@
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
-    "build_app":"cd views/app && npm run set_up && cd ../..",
-    "build_auth":"cd views/auth && npm run set_up && cd ../..",
+    "build_app": "cd views/app && npm run set_up && cd ../..",
+    "build_auth": "cd views/auth && npm run set_up && cd ../..",
     "set_up": "npm run build_auth && npm run build_app && npm i --legacy-peer-deps",
     "clear_auth": "cd views/auth && rm -rf build*",
     "clear_app": "cd views/app && rm -rf build*",
-    "clear":"npm run clear_auth && npm run clear_app",
-    "rebuild":"npm run clear && npm run set_up"
+    "clear": "npm run clear_auth && npm run clear_app",
+    "rebuild": "npm run clear && npm run set_up"
   },
   "author": "",
   "license": "ISC",
