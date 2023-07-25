@@ -17,13 +17,7 @@ router.use("*", cors(), (req, res, callNext) => {
     callNext();
 });
 
-router.use(
-    "/api",
-    express.json(),
-    multer().single(),
-
-    require("./api")
-);
+router.use("/api", require("./api"));
 
 let library = {};
 router.get("*", (req, res, callNext) => {

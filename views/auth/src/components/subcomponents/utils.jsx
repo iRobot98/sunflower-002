@@ -19,3 +19,16 @@ export const FormInput = ({ label, iprops, errors }) => {
         </div>
     );
 };
+
+export const SubmitButton = ({ text }) => {
+    return (
+        <div className="flex flex-row-reverse">
+            <button
+                type="submit"
+                className="bg-[green] min-h-[2rem] text-white rounded-md hover:font-bold hover:px-[0.90rem] px-[1rem]"
+            >
+                {text}
+            </button>
+        </div>
+    );
+};

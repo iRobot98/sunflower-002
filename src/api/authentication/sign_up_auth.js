@@ -13,7 +13,7 @@ const name_regex = /^[A-Za-z']+$/i;
 const phonenumber_general = /([0-9]{10})|(\+([0-9]{3})([0-9]{9}))/;
 const kenyan_phone_number = /((07|01)[0-9]{8})|(\+254[0-9]{8})/;
 
-const AuthenticationSchema = z
+const SignUpAuthenticationSchema = z
     .object({
         firstName: z
             .string()
@@ -82,9 +82,9 @@ const AuthenticationSchema = z
         }
     });
 
-const auth_ = (data) => {
+const auth_signup = (data) => {
     try {
-        AuthenticationSchema.parse(data);
+        SignUpAuthenticationSchema.parse(data);
         console.log(data);
         return true;
     } catch (err) {
@@ -93,6 +93,33 @@ const auth_ = (data) => {
     }
 };
 
+const SignInAuthenticationSchema = z.object({
+    username: z
+        .string()
+
+        .min(3, "too short")
+        .max(20, "too long")
+        .regex(/[A-Za-z'0-9@.\+]+/, "invalid character in username"),
+    password: z
+        .string()
+        .min(4, "Password is too short")
+        .max(20, "Password is too long")
+        .regex(/(?=.*?[A-Z])/, "invalid password")
+        .regex(/(?=.*?[a-z])/, "invalid password")
+        .regex(/(?=.*?[0-9])/, "invalid password"),
+});
+
+const auth_signin = (data) => {
+    try {
+        SignUpAuthenticationSchema.parse(data);
+        console.log(data);
+        return true;
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+};
 module.exports = {
-    auth_,
+    auth_signup,
+    auth_signin,
 };

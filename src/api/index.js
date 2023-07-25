@@ -1,19 +1,25 @@
 const router = require("../router.import");
 const multer = require("multer");
 const express = require("express");
-const CORS = require("cors");
-const { auth_ } = require("./authentication/sign_up_auth");
+const cors = require("cors");
+const {
+    auth_,
+    auth_signup,
+    auth_signin,
+} = require("./authentication/sign_up_auth");
+
+router.use(cors(), express.json(), express.urlencoded({ extended: true }));
 
 const helloworld = {
     hello: "hello world",
 };
-const success = (data) => ({
+const success = (data_) => ({
     success: true,
-    data: data || "no data",
+    data: data_ || "no data",
 });
-const failure = (data) => ({
+const failure = (data_) => ({
     success: false,
-    data: data || "no data",
+    data: data_ || "no data",
 });
 const POST = (method = "m") => method.toLowerCase() == "post";
 const GET = (method = "m") => method.toLowerCase() == "get";
@@ -23,7 +29,7 @@ router.use("*", multer().any(), (req, res, callNext) => {
     if (!originalUrl.startsWith("/api")) return callNext();
     const s = (method + " " + originalUrl).toLowerCase();
     // console.log(s);
-    const data =
+    const data_ =
         body || file || files
             ? body
                 ? body
@@ -34,20 +40,41 @@ router.use("*", multer().any(), (req, res, callNext) => {
                 : "no data"
             : "no data";
     if (POST(method)) {
-        if (data == "no data") {
-            res.status(400).send({ success: false, error: data });
+        if (data_ == "no data") {
+            res.status(400).send({ success: false, error: data_ });
             return;
         }
     }
+
     switch (s) {
+        case "post /api/auth/recaptcha":
+            if (false && data_?.ReCAPTCHA_sitekey == "get") {
+                res.status(201).send({
+                    ReCATPCHA_sitekey: process.env.RECATPCHA_SITEKEY,
+                });
+                return;
+            }
+            break;
         case "get /api/auth":
             res.status(201).send(helloworld);
             return;
         case "post /api/auth":
-            if (data?.data && auth_(data?.data)) {
-                res.status(201).send(success(data.data));
+            const { data, action } = data_;
+            switch (action) {
+                case "sign_up":
+                    if (auth_signup(data)) {
+                        res.status(201).send(success(data));
+                        return;
+                    }
+                case "sign_in":
+                    if (auth_signin(data)) {
+                        res.status(201).send(success(data));
+                        return;
+                    }
+                default:
             }
-            res.status(400).send(failure(data));
+
+            res.status(400).send(failure(data_));
             return;
     }
     console.log(body);

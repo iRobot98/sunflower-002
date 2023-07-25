@@ -1,0 +1,4 @@
+{
+    "ignore": ["node_modules", "views"],
+    "watch": [".env", "*.js*"]
+}

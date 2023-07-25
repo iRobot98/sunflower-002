@@ -1,18 +1,21 @@
 import React from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 import Layout from "../components/layout";
-import { useForm } from "react-hook-form";
 import { defaultDate, postData } from "../utils";
 import PageOne from "../components/sign_up/page_one";
 
 import PageTwo from "../components/sign_up/page_two";
 import form_schema from "../components/sign_up/form_schema";
+import { SubmitButton } from "../components/subcomponents/utils";
 
 export default function SignUp() {
     const {
         register,
         handleSubmit,
+
         reset,
         formState: { errors },
     } = useForm({
@@ -31,6 +34,9 @@ export default function SignUp() {
         postData(req_data).then((res) => console.log(res));
         reset();
     };
+    const Divider = () => (
+        <div className="min-h-[4px] w-[50%] mx-auto bg-[gray] my-[.5rem]" />
+    );
 
     return (
         <Layout>
@@ -44,15 +50,10 @@ export default function SignUp() {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <PageOne register={register} errors={errors} />
+                <Divider />
                 <PageTwo register={register} errors={errors} />
-                <div className="flex flex-row-reverse">
-                    <button
-                        type="submit"
-                        className="bg-[green] text-white rounded-md hover:font-bold px-2"
-                    >
-                        Submit
-                    </button>
-                </div>
+                <Divider />
+                <SubmitButton text="Sign Up" />
             </form>
         </Layout>
     );
