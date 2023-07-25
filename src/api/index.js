@@ -67,13 +67,16 @@ router.use("*", multer().any(), (req, res, callNext) => {
                     case "sign_up":
                         if (auth_signup(data)) {
                             const v = CRUD_User.create(data);
-                            if (v?.success) {
-                                return res.status(201).send(success(data));
-                            } else {
-                                return res
-                                    .status(401)
-                                    .send(failure({ error: v.error }));
-                            }
+                            console.log(v);
+                            return v.then((val) => {
+                                if (val?.success) {
+                                    return res.status(201).send(success(data));
+                                } else {
+                                    return res
+                                        .status(401)
+                                        .send(failure({ error: val.error }));
+                                }
+                            });
 
                             throw Error(v?.error);
                         }

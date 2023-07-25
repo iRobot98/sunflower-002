@@ -11,7 +11,8 @@ const User = model(
                 last_name: { type: String, required: true },
             },
             user_name: { type: String, required: false, unique: true },
-            password: { type: String, select: false },
+            password: { type: String, required: true },
+            date_of_birth: { type: String, required: true },
             phone_number: {
                 type: [
                     {
@@ -19,6 +20,10 @@ const User = model(
                         required: true,
                     },
                 ],
+            },
+            email: {
+                type: [String],
+                required: false,
             },
             id_number: {
                 type: String,
