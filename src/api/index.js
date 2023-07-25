@@ -7,6 +7,7 @@ const {
     auth_signup,
     auth_signin,
 } = require("./authentication/sign_up_auth");
+const CRUD_User = require("../DB/CRUD_APIs/user.cruds");
 
 router.use(cors(), express.json(), express.urlencoded({ extended: true }));
 
@@ -60,20 +61,33 @@ router.use("*", multer().any(), (req, res, callNext) => {
             return;
         case "post /api/auth":
             const { data, action } = data_;
-            switch (action) {
-                case "sign_up":
-                    if (auth_signup(data)) {
-                        res.status(201).send(success(data));
-                        return;
-                    }
-                case "sign_in":
-                    if (auth_signin(data)) {
-                        res.status(201).send(success(data));
-                        return;
-                    }
-                default:
-            }
+            console.log(data_);
+            try {
+                switch (action) {
+                    case "sign_up":
+                        if (auth_signup(data)) {
+                            const v = CRUD_User.create(data);
+                            if (v?.success) {
+                                return res.status(201).send(success(data));
+                            } else {
+                                return res
+                                    .status(401)
+                                    .send(failure({ error: v.error }));
+                            }
 
+                            throw Error(v?.error);
+                        }
+                    case "sign_in":
+                        if (auth_signin(data)) {
+                            res.status(201).send(success(data));
+                            return;
+                        }
+                    default:
+                }
+            } catch (err) {
+                console.log(err.message);
+                return res.status(401).send(failure({ error: err.message }));
+            }
             res.status(400).send(failure(data_));
             return;
     }

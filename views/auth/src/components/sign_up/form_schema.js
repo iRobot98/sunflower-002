@@ -17,17 +17,17 @@ const FormSchema = z
         firstName: z
             .string()
 
-            .min(3, "Name is too short")
+            .min(3, "Name is required")
             .max(20, "Name is too long")
             .regex(name_regex, "Please write your real name"),
         middleName: z
             .string()
-            .min(3, "Name is too short")
+            .min(3, "Name is required")
             .max(20, "Name is too long")
             .regex(name_regex, "Please write your real name"),
         lastName: z
             .string()
-            .min(3, "Name is too short")
+            .min(3, "Name is required")
             .max(20, "Name is too long")
             .regex(name_regex, "Please write your real name"),
         DateOfBirth: z
@@ -52,7 +52,7 @@ const FormSchema = z
             ),
         userName: z
             .string()
-            .min(4, "UserName is too short")
+            .min(4, "UserName is required")
             .max(16, "UserName is too long")
             .regex(/[a-zA-Z0-9]+/, "Only letters and numbers are allowed")
             .regex(/[a-zA-Z][a-zA-Z0-9]+/, "Name should start with a letter"),

@@ -31,8 +31,11 @@ export default function SignUp() {
             data,
         };
 
-        postData(req_data).then((res) => console.log(res));
-        reset();
+        postData(req_data).then((res) => {
+            const { success } = res;
+            if (success == true) reset();
+            console.log(res);
+        });
     };
     const Divider = () => (
         <div className="min-h-[4px] w-[50%] mx-auto bg-[gray] my-[.5rem]" />

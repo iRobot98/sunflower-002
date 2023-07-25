@@ -18,17 +18,17 @@ const SignUpAuthenticationSchema = z
         firstName: z
             .string()
 
-            .min(3, "Name is too short")
+            .min(3, "Name is required")
             .max(20, "Name is too long")
             .regex(name_regex, "Please write your real name"),
         middleName: z
             .string()
-            .min(3, "Name is too short")
+            .min(3, "Name is required")
             .max(20, "Name is too long")
             .regex(name_regex, "Please write your real name"),
         lastName: z
             .string()
-            .min(3, "Name is too short")
+            .min(3, "Name is required")
             .max(20, "Name is too long")
             .regex(name_regex, "Please write your real name"),
         DateOfBirth: z
@@ -53,7 +53,7 @@ const SignUpAuthenticationSchema = z
             ),
         userName: z
             .string()
-            .min(4, "UserName is too short")
+            .min(4, "UserName is required")
             .max(16, "UserName is too long")
             .regex(/[a-zA-Z0-9]+/, "Only letters and numbers are allowed")
             .regex(/[a-zA-Z][a-zA-Z0-9]+/, "Name should start with a letter"),
@@ -83,14 +83,7 @@ const SignUpAuthenticationSchema = z
     });
 
 const auth_signup = (data) => {
-    try {
-        SignUpAuthenticationSchema.parse(data);
-        console.log(data);
-        return true;
-    } catch (err) {
-        console.log(err);
-        return false;
-    }
+    return SignUpAuthenticationSchema.safeParse(data)?.success;
 };
 
 const SignInAuthenticationSchema = z.object({
@@ -109,15 +102,39 @@ const SignInAuthenticationSchema = z.object({
         .regex(/(?=.*?[0-9])/, "invalid password"),
 });
 
+const isPhoneNumber = z.object({
+    username: z
+        .string()
+        .min(10, "Number is too short")
+        .max(13, "Number is too long")
+        .regex(phonenumber_general, "please enter a valid phone number")
+        .regex(kenyan_phone_number, "Only kenyan phone numbers are accepted"),
+});
+
+const isUserName = z.object({
+    username: z
+        .string()
+        .min(4, "UserName is required")
+        .max(16, "UserName is too long")
+        .regex(/[a-zA-Z0-9]+/, "Only letters and numbers are allowed")
+        .regex(/[a-zA-Z][a-zA-Z0-9]+/, "Name should start with a letter"),
+});
+
+const isEmail = z.object({
+    username: z.string().email(),
+});
+
 const auth_signin = (data) => {
-    try {
-        SignUpAuthenticationSchema.parse(data);
+    const result = SignInAuthenticationSchema.safeParse(data);
+    if (result?.success) {
         console.log(data);
-        return true;
-    } catch (err) {
-        console.log(err);
-        return false;
+        if (isEmail.safeParse(data)?.success) return true;
+        if (isPhoneNumber.safeParse(data)) return true;
+        if (isUserName.safeParse(data)) return true;
     }
+
+    console.log(result.error);
+    return false;
 };
 module.exports = {
     auth_signup,

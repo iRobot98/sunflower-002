@@ -38,9 +38,11 @@ function SignIn(props) {
         postData({
             action: "sign_in",
             data,
+        }).then((res) => {
+            const { success } = res;
+            if (success == true) reset();
+            console.log(res);
         });
-
-        reset();
     };
     return (
         <Layout>
