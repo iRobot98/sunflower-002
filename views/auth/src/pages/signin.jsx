@@ -5,13 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FormInput, SubmitButton } from "../components/subcomponents/utils";
 import { postData } from "../utils";
+import { Navigate } from "react-router-dom";
 
 const form_schema = z.object({
     username: z
         .string()
 
         .min(3, "too short")
-        .max(20, "too long")
         .regex(/[A-Za-z'0-9@.\+]+/, "invalid character in username"),
     password: z
         .string()
@@ -33,6 +33,7 @@ function SignIn(props) {
         resolver: zodResolver(form_schema),
     });
 
+    const [NavigateTo, setNavigateTo] = useState(false);
     const onSubmit = (data) => {
         console.log(data);
         postData({
@@ -40,11 +41,18 @@ function SignIn(props) {
             data,
         }).then((res) => {
             const { success } = res;
-            if (success == true) reset();
+            if (success == true) {
+                reset();
+                setNavigateTo(true);
+            }
             console.log(res);
         });
     };
-    return (
+
+    const [toSignUp, setSignUp] = useState(false);
+    return NavigateTo ? (
+        <Navigate to="/app/" />
+    ) : (
         <Layout>
             <div className="mx-auto min-h-[6rem] font-bold flex-center">
                 <h2 className="text-[2rem] text-[#003cffab]">Sign In</h2>
@@ -64,6 +72,13 @@ function SignIn(props) {
                     errors={errors["password"]}
                     iprops={{ ...register("password"), type: "password" }}
                 />
+
+                <a
+                    className="text-[#75adf6] hover:text-[#6150c3] text-md my-[1rem]"
+                    href="/auth/sign_up"
+                >
+                    Don't have an account? Sign Up...
+                </a>
 
                 <SubmitButton text="Sign In" />
             </form>

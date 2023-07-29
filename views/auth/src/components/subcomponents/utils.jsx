@@ -20,11 +20,12 @@ export const FormInput = ({ label, iprops, errors }) => {
     );
 };
 
-export const SubmitButton = ({ text }) => {
+export const SubmitButton = ({ text, ...props }) => {
     return (
         <div className="flex flex-row-reverse">
             <button
                 type="submit"
+                props={{ ...props }}
                 className="bg-[green] min-h-[2rem] text-white rounded-md hover:font-bold hover:px-[0.90rem] px-[1rem]"
             >
                 {text}

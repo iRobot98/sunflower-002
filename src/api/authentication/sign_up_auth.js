@@ -83,7 +83,7 @@ const SignUpAuthenticationSchema = z
     });
 
 const auth_signup = (data) => {
-    return SignUpAuthenticationSchema.safeParse(data)?.success;
+    return SignUpAuthenticationSchema.safeParse(data);
 };
 
 const SignInAuthenticationSchema = z.object({
@@ -91,8 +91,7 @@ const SignInAuthenticationSchema = z.object({
         .string()
 
         .min(3, "too short")
-        .max(20, "too long")
-        .regex(/[A-Za-z'0-9@.\+]+/, "invalid character in username"),
+        .regex(/[A-Za-z'0-9@._\+]+/, "invalid character in username"),
     password: z
         .string()
         .min(4, "Password is too short")
@@ -129,14 +128,26 @@ const auth_signin = (data) => {
     if (result?.success) {
         console.log(data);
         if (isEmail.safeParse(data)?.success) return true;
-        if (isPhoneNumber.safeParse(data)) return true;
-        if (isUserName.safeParse(data)) return true;
+        if (isPhoneNumber.safeParse(data)?.success) return true;
+        if (isUserName.safeParse(data)?.success) return true;
     }
 
     console.log(result.error);
     return false;
 };
+
+const check_signin = (data) => {
+    if (isEmail.safeParse(data)?.success)
+        return { success: true, type: "email" };
+    if (isPhoneNumber.safeParse(data)?.success)
+        return { success: true, type: "phonenumber" };
+    if (isUserName.safeParse(data)?.success)
+        return { success: true, type: "username" };
+
+    return { success: false, type: "not recognised" };
+};
 module.exports = {
     auth_signup,
     auth_signin,
+    check_signin,
 };

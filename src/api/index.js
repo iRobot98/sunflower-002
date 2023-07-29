@@ -8,6 +8,7 @@ const {
     auth_signin,
 } = require("./authentication/sign_up_auth");
 const CRUD_User = require("../DB/CRUD_APIs/user.cruds");
+const { logger } = require("../utils/logger");
 
 router.use(cors(), express.json(), express.urlencoded({ extended: true }));
 
@@ -20,7 +21,7 @@ const success = (data_) => ({
 });
 const failure = (data_) => ({
     success: false,
-    data: data_ || "no data",
+    error: data_ || "no data",
 });
 const POST = (method = "m") => method.toLowerCase() == "post";
 const GET = (method = "m") => method.toLowerCase() == "get";
@@ -49,12 +50,6 @@ router.use("*", multer().any(), (req, res, callNext) => {
 
     switch (s) {
         case "post /api/auth/recaptcha":
-            if (false && data_?.ReCAPTCHA_sitekey == "get") {
-                res.status(201).send({
-                    ReCATPCHA_sitekey: process.env.RECATPCHA_SITEKEY,
-                });
-                return;
-            }
             break;
         case "get /api/auth":
             res.status(201).send(helloworld);
@@ -64,26 +59,40 @@ router.use("*", multer().any(), (req, res, callNext) => {
             console.log(data_);
             try {
                 switch (action) {
-                    case "sign_up":
-                        if (auth_signup(data)) {
-                            const v = CRUD_User.create(data);
-                            console.log(v);
+                    case "sign_up": {
+                        const j = auth_signup(data);
+
+                        if (j?.success) {
+                            const v = CRUD_User.CreateUser(data);
+
                             return v.then((val) => {
+                                console.log(val);
                                 if (val?.success) {
-                                    return res.status(201).send(success(data));
+                                    return res.status(201).send(success(val));
                                 } else {
                                     return res
-                                        .status(401)
+                                        .status(400)
                                         .send(failure({ error: val.error }));
                                 }
                             });
-
-                            throw Error(v?.error);
+                        } else {
+                            return res.status(400).send(failure(j));
                         }
+                    }
+
                     case "sign_in":
-                        if (auth_signin(data)) {
-                            res.status(201).send(success(data));
-                            return;
+                        const j = auth_signin(data);
+                        if (j) {
+                            const login_attempt = CRUD_User.LogInUser(data);
+                            return login_attempt.then((val) => {
+                                if (val?.success)
+                                    return res
+                                        .status(201)
+                                        .send(success(login_attempt));
+                                return res.status(400).send(failure(val));
+                            });
+                        } else {
+                            return res.status(400).send(failure(j));
                         }
                     default:
                 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,8 @@ import PageOne from "../components/sign_up/page_one";
 import PageTwo from "../components/sign_up/page_two";
 import form_schema from "../components/sign_up/form_schema";
 import { SubmitButton } from "../components/subcomponents/utils";
+import { Navigate, Router } from "react-router-dom";
+import UserAlreadyExists from "./UserAlreadyExists";
 
 export default function SignUp() {
     const {
@@ -25,6 +27,7 @@ export default function SignUp() {
         resolver: zodResolver(form_schema),
     });
 
+    const [userExists, setUserExists] = useState(false);
     const onSubmit = (data) => {
         const req_data = {
             action: "sign_up",
@@ -32,8 +35,24 @@ export default function SignUp() {
         };
 
         postData(req_data).then((res) => {
-            const { success } = res;
-            if (success == true) reset();
+            const { success, data, error } = res;
+            if (success == true) {
+                // set token in cookie
+                const { token, user } = data;
+                if (token) {
+                    document.cookie = `jwt_token=${token}`;
+                    // reset();
+                }
+                localStorage.setItem("User", JSON.stringify(user));
+            } else {
+                switch (error.error.toString()) {
+                    case "user exists":
+                        setUserExists(true);
+                        break;
+                    default:
+                }
+            }
+
             console.log(res);
         });
     };
@@ -41,7 +60,9 @@ export default function SignUp() {
         <div className="min-h-[4px] w-[50%] mx-auto bg-[gray] my-[.5rem]" />
     );
 
-    return (
+    return userExists ? (
+        <UserAlreadyExists />
+    ) : (
         <Layout>
             <div className="mx-auto min-h-[6rem] font-bold flex-center">
                 <h2 className="text-[2rem] text-[#003cffab]">Sign Up</h2>
